@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "deny": [
+      "Read(./private/never-write.txt)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit|NotebookEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/tools/guards/write-guard.sh\"",
+            "timeout": 30
+          }
+        ]
+      }
+    ]
+  }
+}

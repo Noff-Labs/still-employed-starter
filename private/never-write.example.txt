@@ -1,0 +1,19 @@
+# Never-write list (example)
+#
+# Copy this file to never-write.txt in the same folder, then add your own
+# entries below. Git ignores never-write.txt, so it never leaves this computer
+# through git. Type the entries yourself in a text editor. Don't paste them
+# into an AI chat.
+#
+# One entry per line. Lines that start with # are comments. Matching ignores
+# upper and lower case. Use entries of at least 4 characters, so the guards
+# don't block ordinary words.
+#
+# Good entries:
+#   - your surname (and anyone else's in your household or team)
+#   - your street address, as you would write it (number and street name)
+#   - full account, card or policy numbers you want blocked
+#   - your computer's username (the name of your home folder)
+#   - anything else that must never appear in a shared file
+#
+# Add your entries below this line.

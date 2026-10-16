@@ -1,0 +1,18 @@
+# Private folder: raw documents and the never-write list. Only the README and
+# the empty example list are tracked.
+private/*
+!private/README.md
+!private/never-write.example.txt
+
+# Machine-local settings often hold absolute paths, which contain the
+# computer's username. Never track them.
+*.local.*
+.claude/settings.local.json
+
+# Secrets files
+.env
+.env.*
+
+# System noise
+.DS_Store
+Thumbs.db

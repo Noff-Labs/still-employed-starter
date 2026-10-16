@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# Commit message guard: a git commit-msg hook. A commit message is uploaded
+# with every push, so it gets the same check as the files.
+
+. "$(dirname "$0")/common.sh"
+
+message="$(grep -v '^#' "$1")"
+hits="$(scan_text "$message")"
+if [ -n "$hits" ]; then
+  echo "COMMIT BLOCKED: the commit message contains:" >&2
+  sed 's/^/  - /' <<<"$hits" >&2
+  echo "$HELP_LINE" >&2
+  exit 1
+fi
+exit 0

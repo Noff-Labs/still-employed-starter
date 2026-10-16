@@ -1,0 +1,121 @@
+#!/usr/bin/env bash
+# Pre-push check: a git pre-push hook.
+#
+# A push uploads EVERY past commit, not just today's files. A value removed
+# from the current files still ships if it is in the history. So this scans
+# the full history being pushed: files, commit messages, the never-write list,
+# secret patterns and absolute home-folder paths. It also warns if the GitHub
+# repository is public.
+
+. "$(dirname "$0")/common.sh"
+cd "$ROOT" || exit 1
+
+remote_url="${2:-}"
+zero="0000000000000000000000000000000000000000"
+fail=0
+
+echo "Privacy check before push"
+
+paths_with() {
+  # paths_with <git grep options...>: file paths in the history that match.
+  git rev-list "$tip" | xargs git grep -I -l "$@" 2>/dev/null | cut -d: -f2- | sort -u
+}
+
+while read -r local_ref local_sha remote_ref remote_sha; do
+  [ -z "${local_sha:-}" ] && continue
+  [ "$local_sha" = "$zero" ] && continue
+  tip="$local_sha"
+  echo "  Checking every commit in $local_ref"
+
+  # 1. Files that must never be tracked, anywhere in the history.
+  while IFS= read -r f; do
+    [ -z "$f" ] && continue
+    if is_never_tracked "$f"; then
+      echo "  FAIL: $f is in the history and must never be uploaded." >&2
+      fail=1
+    fi
+  done <<<"$(git log "$tip" --format= --name-only | sort -u)"
+
+  # 2. Never-write list entries in any file of any commit.
+  if [ "$NEVER_WRITE_FOUND" -eq 0 ]; then
+    echo "  WARN: private/never-write.txt not found. Your own values were NOT checked."
+  else
+    i=0
+    for term in "${NEVER_WRITE_ENTRIES[@]+"${NEVER_WRITE_ENTRIES[@]}"}"; do
+      i=$((i + 1))
+      found="$(paths_with -i -F -e "$term")"
+      if [ -n "$found" ]; then
+        echo "  FAIL: entry #$i on your never-write list is in the history of:" >&2
+        sed 's/^/      /' <<<"$found" >&2
+        fail=1
+      fi
+    done
+    echo "  Never-write list: $i entries checked."
+  fi
+
+  # 3. Secret-shaped patterns.
+  i=0
+  while [ "$i" -lt "${#SECRET_PATTERNS[@]}" ]; do
+    found="$(paths_with -E -e "${SECRET_PATTERNS[$i]}")"
+    if [ -n "$found" ]; then
+      echo "  FAIL: ${PATTERN_NAMES[$i]} is in the history of:" >&2
+      sed 's/^/      /' <<<"$found" >&2
+      fail=1
+    fi
+    i=$((i + 1))
+  done
+
+  # 4. Absolute home-folder paths (they contain the username).
+  for p in "${HOME_PATHS[@]}"; do
+    found="$(paths_with -F -e "$p")"
+    if [ -n "$found" ]; then
+      echo "  FAIL: an absolute home-folder path is in the history of:" >&2
+      sed 's/^/      /' <<<"$found" >&2
+      fail=1
+    fi
+  done
+
+  # 5. Commit messages.
+  hits="$(scan_text "$(git log "$tip" --format=%B)")"
+  if [ -n "$hits" ]; then
+    echo "  FAIL: a commit message contains:" >&2
+    sed 's/^/      - /' <<<"$hits" >&2
+    fail=1
+  fi
+
+  # 6. Author names and emails. A warning only: they are your identity.
+  if [ "$NEVER_WRITE_FOUND" -eq 1 ]; then
+    people="$(git log "$tip" --format='%an %ae %cn %ce' | sort -u)"
+    for term in "${NEVER_WRITE_ENTRIES[@]+"${NEVER_WRITE_ENTRIES[@]}"}"; do
+      if grep -iqF -- "$term" <<<"$people"; then
+        echo "  WARN: a commit author or email matches your never-write list. That is normal for a private repository. Think twice before making it public."
+        break
+      fi
+    done
+  fi
+done
+
+# 7. Is the GitHub repository public? A warning only.
+case "$remote_url" in
+  *github.com*)
+    repo="$(sed -E 's#^.*github\.com[:/]##; s#\.git$##' <<<"$remote_url")"
+    if ! command -v gh >/dev/null 2>&1; then
+      echo "  WARN: could not check whether $repo is public (the gh tool is not installed). Check on GitHub yourself."
+    else
+      vis="$(gh repo view "$repo" --json visibility -q .visibility 2>/dev/null)"
+      case "$vis" in
+        PUBLIC) echo "  WARNING: $repo is PUBLIC. Anyone can read everything you push." ;;
+        PRIVATE|INTERNAL) echo "  Repository visibility: $vis." ;;
+        *) echo "  WARN: could not check whether $repo is public. Check on GitHub yourself." ;;
+      esac
+    fi
+    ;;
+esac
+
+if [ "$fail" -ne 0 ]; then
+  echo "PUSH STOPPED. Nothing was uploaded. Remove the values from the history before pushing." >&2
+  echo "$HELP_LINE" >&2
+  exit 1
+fi
+echo "Privacy check passed."
+exit 0

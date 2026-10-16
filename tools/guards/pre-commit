@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+# Commit guard: a git pre-commit hook, so it works with any AI tool or none.
+# Turn it on with:  git config core.hooksPath tools/guards
+#
+# It scans only the lines this commit ADDS, so a commit that removes sensitive
+# content still goes through. A match blocks the commit.
+
+. "$(dirname "$0")/common.sh"
+cd "$ROOT" || exit 1
+
+blocked=0
+
+if [ "$NEVER_WRITE_FOUND" -eq 0 ]; then
+  echo "Privacy guard note: private/never-write.txt not found, so only secret patterns were checked." >&2
+fi
+
+# 1. Files that must never be committed.
+while IFS= read -r f; do
+  [ -z "$f" ] && continue
+  if is_never_tracked "$f"; then
+    echo "COMMIT BLOCKED: $f must never be committed. Unstage it with: git restore --staged \"$f\"" >&2
+    blocked=1
+  fi
+done <<<"$(git diff --cached --name-only --diff-filter=ACMR)"
+
+# 2. Added lines and new file names, file by file.
+while IFS= read -r f; do
+  [ -z "$f" ] && continue
+  added="$(git diff --cached --no-color -U0 -- "$f" | grep '^+' | grep -v '^+++ ')"
+  hits="$(scan_text "$f
+$added")"
+  if [ -n "$hits" ]; then
+    echo "COMMIT BLOCKED: the lines added to $f contain:" >&2
+    sed 's/^/  - /' <<<"$hits" >&2
+    blocked=1
+  fi
+done <<<"$(git diff --cached --name-only --diff-filter=ACMR)"
+
+if [ "$blocked" -ne 0 ]; then
+  echo "$HELP_LINE" >&2
+  exit 1
+fi
+exit 0
