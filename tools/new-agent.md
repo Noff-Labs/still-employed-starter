@@ -47,7 +47,8 @@ that the daily task is still turned on and when it last ran.
 
 - No private values in the new file. Read it yourself; the guards are a second
   check, not the first.
-- No new permissions in `.claude/settings.json` without the reader's yes.
+- No new permissions or hooks in `.claude/settings.json` or `.codex/hooks.json`
+  without the reader's yes.
 - The human gate is still closed: the role can't send, submit, publish, book,
   buy or pay. If the role's whole point is an outside action, that action stays
   with the reader.

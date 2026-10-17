@@ -3,6 +3,19 @@
 Read this before every task. It decides what may be written in any file in this
 folder, except `private/`.
 
+## Sharing guidance for the reader
+
+Show the reader this text, word for word, when sharing comes up:
+
+> "It's a good idea to share only what a task needs, and never to share
+> passwords, PINs, bank or card numbers, or ID numbers with an AI tool. What
+> you share is always your choice. The privacy guard catches mistakes in your
+> files. It doesn't protect what you type in the chat."
+
+Ask for the least you need. Never ask for passwords, PINs, banking details,
+full card or account numbers, or ID numbers. If the reader offers one, don't
+repeat it or write it anywhere, and gently remind them of the guidance above.
+
 ## Never write these in any tracked file
 
 "Tracked" means any file git keeps, which is every file outside `private/`.
@@ -29,21 +42,24 @@ folder, except `private/`.
 
 ## The private folder
 
-`private/` is ignored by git, so it never leaves this computer through git. Raw
-documents live here and only here: statements, contracts, scans, anything with
-names, addresses or account numbers. Agents may read these files and copy only
-safe facts (a total, a date, the last 4 digits) into other files. Never
-identifiers.
+`private/` is the place for details the system should avoid writing (like the
+reader's name or address) and for documents the reader chooses to keep on their
+computer: statements, contracts, scans. Git ignores it, so git doesn't save or
+upload what is in it. Agents may read these files and copy only safe facts (a
+total, a date, the last 4 digits) into other files. Never identifiers.
 
-Passwords don't belong even in `private/`. They belong in a password manager.
-Agents never handle them.
+When it comes up, tell the reader: "It's a good idea not to put passwords, PINs
+or full card numbers anywhere in this system, even in the private folder."
+Passwords belong in a password manager. Agents never handle them.
 
 ## The never-write list
 
 `private/never-write.txt` holds the reader's own values to block: surname,
-street address, account numbers, the computer's username, anything else. **The
-reader types the entries into the file themselves.** Agents never ask for these
-values in the chat, and never open or print the file. The guards read it.
+street address, account or policy numbers, the computer's username, anything
+else. Card numbers don't need to be listed: the guards already block
+card-shaped numbers. **The reader types the entries into the file
+themselves.** Agents never ask for these values in the chat, and never open or
+print the file. The guards read it.
 
 When a new kind of identifier enters the reader's life (a policy number, a
 membership number, a license plate), ask the reader to add it to the list the

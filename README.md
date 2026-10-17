@@ -2,7 +2,7 @@
 
 A starter AI agent team for your job, your home or a small business. It is a
 small set of plain text files. Your AI tool reads them and plays the roles: a
-Guide that sets the system up with you, and a chief of staff you talk to every
+Guide that sets the system up with you, and a main helper you talk to every
 day after that.
 
 This is the system used by David Noff, author of *Still Employed*. He built it
@@ -30,14 +30,20 @@ Download the starter system from github.com/Noff-Labs/still-employed-starter int
 
 ## What happens next
 
-1. The Guide asks you what this is for, then asks a few questions, one at a time.
-   It asks **what** you want done, not **how** to do it.
-2. It builds the system with you: it names your chief of staff, writes your
-   rules, fills in memory, and turns on the privacy guard.
-3. You start with **one** first workflow. You add more roles later, when real
+1. If your AI downloaded the files for you, it will ask you to open a new
+   session inside the new folder. Do that, then type **start**. This turns on
+   the privacy guard.
+2. The Guide asks you what this is for, then asks a few questions, one at a
+   time. It asks **what** you want done, not **how** to do it.
+3. It builds the system with you: you choose a name for your main helper, and
+   the Guide writes your rules, fills in memory, and turns on the privacy
+   guard.
+4. You start with **one** first workflow. You add more roles later, when real
    work shows that one is missing.
-4. After that, open the folder and type **start**. Your chief of staff tells you
+5. After that, open the folder and type **start**. Your main helper tells you
    where things stand and the one next step.
+
+If anything is unclear, now or later, just ask. Your AI can explain any step.
 
 ## Before you start
 
@@ -47,18 +53,26 @@ Download the starter system from github.com/Noff-Labs/still-employed-starter int
   need it.
 - **Start on the cheapest paid plan** of your AI tool. Upgrade only if you keep
   hitting its limits.
-- **At work, use only AI tools your employer allows.** Keep confidential
-  information out unless your employer allows it.
+- **What you share.** It's a good idea to share only what a task needs, and
+  never to share passwords, PINs, bank or card numbers, or ID numbers with an
+  AI tool. What you share is always your choice. The privacy guard catches
+  mistakes in your files. It doesn't protect what you type in the chat.
+- **At work.** At work, it's a good idea to use only AI tools your employer
+  allows, and to keep confidential information out unless your employer allows
+  it.
 - **Which AI tool?** David uses Claude Code. Every file is plain markdown, so
-  other AI tools can use it too. One privacy layer (the write guard) works only
-  in Claude Code. The other layers work with any tool.
+  other AI tools can use it too. One privacy layer (the write guard) works in
+  Claude Code and Codex. The other layers work with any tool. In Codex, you
+  approve the write guard once by typing **/hooks**. The Guide shows you how.
 
-## Two rules that never change
+## Two rules the system is set up to follow
 
-1. **The human gate.** Agents draft, stage and recommend. A human publishes,
-   sends, signs, pays and buys. Drafts wait in `output/` for you.
-2. **The privacy guard is on from day one.** It stops your private details from
-   ending up anywhere they could be shared.
+1. **The human gate.** The system is set up to draft, stage and recommend. You
+   publish, send, sign, pay and buy. Drafts wait in `output/` for you.
+2. **The privacy guard is on from day one.** It is set up to stop your private
+   details from ending up anywhere they could be shared.
+
+AI can make mistakes, so it's a good idea to check important work.
 
 ## What's inside
 
@@ -67,7 +81,7 @@ Download the starter system from github.com/Noff-Labs/still-employed-starter int
 | `AGENTS.md` | Instructions every AI tool reads first |
 | `CLAUDE.md` | Points Claude Code to `AGENTS.md` |
 | `agents/guide.md` | The setup Guide |
-| `agents/chief-of-staff.md` | The one agent you talk to every day (a template the Guide fills in) |
+| `agents/chief-of-staff.md` | The main helper you talk to every day (a template the Guide fills in with you) |
 | `rules/rules.md` | House rules every agent follows |
 | `rules/privacy.md` | What must never be written, and what to write instead |
 | `memory/state.md` | Where things stand right now, including reminders |
@@ -77,20 +91,27 @@ Download the starter system from github.com/Noff-Labs/still-employed-starter int
 | `output/` | Drafts waiting for you |
 | `tools/new-agent.md` | Checklist for adding a new role |
 | `tools/guards/` | The privacy guard scripts |
-| `private/` | Your raw documents and your never-write list. Never tracked by git |
+| `.claude/settings.json`, `.codex/hooks.json` | Turn on the write guard in Claude Code and Codex |
+| `private/` | Details the system should avoid writing (like your name or address), and documents you choose to keep on your computer. Git ignores it |
 
 ## The privacy guard, layer by layer
 
 | Layer | What it does | Works with |
 |---|---|---|
 | 1. Policy (`rules/privacy.md`) | Tells every agent what never to write, and what to write instead | Any AI tool |
-| 2. Private folder (`private/`) | Raw documents live here only. Git ignores it | Any AI tool |
-| 3. Never-write list (`private/never-write.txt`) | Your surname, address, account numbers and similar. You type it yourself; agents never open it | Any AI tool |
-| 4. Write guard | Blocks a file write that contains a listed value or a secret-shaped number | Claude Code |
+| 2. Private folder (`private/`) | For details the system should avoid writing, and documents you keep on your computer. Git ignores it | Any AI tool |
+| 3. Never-write list (`private/never-write.txt`) | Your surname, address, account numbers and similar. You type it yourself; agents are set up never to open it | Any AI tool |
+| 4. Write guard | Blocks a file write that contains a listed value or a secret-shaped number | Claude Code and Codex |
 | 5. Commit guard | Blocks a git commit that adds a listed value | Git |
 | 6. Pre-push check | Scans every commit before upload, and warns if the GitHub repository is public | Git |
 
-If you downloaded the ZIP and don't use git, layers 1 to 4 still protect you.
+If you downloaded the ZIP and don't use git, layers 1 to 4 still help protect
+you. It's a good idea not to put passwords, PINs or full card numbers anywhere
+in this system, even in the private folder.
+
+## Use at your own risk
+
+This is free software, shared as is under the MIT License (see LICENSE), with no warranty. You decide what you share with your AI tool and what you ask it to do, and you're responsible for the results. Nothing here is legal, financial, tax or other professional advice. It's a good idea to check important work yourself before you act on it.
 
 ## License
 

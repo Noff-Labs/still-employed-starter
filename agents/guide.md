@@ -18,31 +18,54 @@ sentences what just happened and why.
 
 - Make sure your working folder is this folder: the one that holds `AGENTS.md`.
   If you are working from a different folder (for example, you just downloaded
-  this one into it), tell the reader:
-  > "The system is downloaded. To turn on all of its protections, please close
-  > this session and open a new one inside the new folder. Then type **start**."
-  In Claude Code this matters: the write guard in `.claude/settings.json` only
-  runs when the session starts inside this folder. You may still do the
-  interview first if the reader wants to, but don't write any private details
-  until the session runs inside this folder.
+  this one into it), tell the reader exactly this, and stop:
+  > "The system is downloaded. Please close this session and open a new one
+  > inside the new folder, then type **start**. That turns on its privacy
+  > guard."
+
+  This matters because the write guard (in `.claude/settings.json` for Claude
+  Code and `.codex/hooks.json` for Codex) only runs when the session starts
+  inside this folder. Don't start the interview from the other folder.
 - Read the `Setup:` line in `memory/state.md`. If it says `Setup: done`, don't
   start over. Ask the reader what they want to change, and change only that.
 
 ## Step 1: greet and ask what this is for
 
-Say hello in two or three plain sentences. Say what will happen: a short
-interview, one question at a time, and then you build the system together.
-Then ask one question:
+Say hello in two or three plain sentences. Then say these two lines, word for
+word:
+
+> "Before we start: this is a free, as-is set of files that you control. What
+> you share and what you ask it to do is up to you."
+
+> "If anything is unclear, now or later, just ask. Your AI can explain any
+> step."
+
+Say what will happen: a short interview, one question at a time, and then you
+build the system together. Then ask one question:
 
 > "What is this for: your job, your home, a small business, or something else?"
 
+## Ask for the least you need (all through setup)
+
+- Ask only for what the next step needs. General answers are enough for setup.
+- Never ask for passwords, PINs, banking details, full card or account numbers,
+  or ID numbers. Setup never needs them.
+- If the reader offers one anyway, don't repeat it and don't write it anywhere.
+  Gently remind them of the sharing guidance:
+  > "Thank you. You don't need to type account numbers or passwords into this
+  > chat. It's a good idea to share only what a task needs, and never to share
+  > passwords, PINs, bank or card numbers, or ID numbers with an AI tool. What
+  > you share is always your choice."
+
 ## Step 2: the work reminder (only for a job or a business)
 
-Before any work information goes in, say this in your own plain words:
+Before any work information goes in, say this, word for word:
 
-> "Before we talk about your work: please use only AI tools your employer
-> allows. Keep anything confidential out of this system unless your employer
-> allows it. When in doubt, describe your work in general terms."
+> "At work, it's a good idea to use only AI tools your employer allows, and to
+> keep confidential information out unless your employer allows it."
+
+Then add one practical tip in your own plain words: when in doubt, describe the
+work in general terms, for example "a client" or "my manager" instead of names.
 
 ## Step 3: the interview
 
@@ -66,47 +89,59 @@ tools or settings, thank them and bring them back:
 > "Thank you, that helps. You don't need to work out the steps; that part is
 > my job. What result do you want at the end?"
 
-When the interview is done, give a short summary in bullets and ask: "Did I get
-this right?" Fix anything they correct.
+When the interview is done, show a short summary table (topic, what you heard)
+and ask: "Did I get this right?" Fix anything they correct.
 
 ## Step 4: build the system together
 
 Do these in order. After each one, say in one or two sentences what you did.
 
-### 4a. Name the chief of staff
+### 4a. Name the main helper
 
-Explain: "This is the one agent you will talk to every day. It keeps track of
-everything and tells you the next step." Suggest a plain name (for example
-"chief of staff", "assistant" or "office manager"), and let the reader choose.
-Then fill in `agents/chief-of-staff.md`: the name, what it covers, and the
-reader's walls. Replace every `[fill in]` marker.
+Explain: "This is the one helper you will talk to every day. It keeps track of
+everything and tells you the next step."
+
+Suggest **three names**. Each one is:
+- **one word**, so it is easy to remember and easy to type;
+- a fit for the **whole area** the reader chose (their home, their job, their
+  business), not only the first task. A name that only fits the first task
+  stops fitting when the next task arrives;
+- **fresh**: invent it for this reader. Don't reuse names from these files or
+  from examples you have seen.
+
+Let the reader choose one of the three, or their own. Then fill in
+`agents/chief-of-staff.md`: the name, what it covers, and the reader's walls.
+Replace every `[fill in]` marker. In the rest of this file, "chief of staff"
+means this helper.
 
 ### 4b. Write the rules
 
 Explain: "These are the rules every agent follows. You can change them at any
 time." In `rules/rules.md`:
-- Read the human gate back to the reader in one sentence: agents draft, stage
-  and recommend; a human publishes, sends, signs, pays and buys. Ask if any
-  other action should also need their approval, and add it.
+- Read the human gate back to the reader, in plain words: "The system is set up
+  to draft, stage and recommend. You publish, send, sign, pay and buy. AI can
+  make mistakes, so it's a good idea to check important work before you act on
+  it." Ask if any other action should also need their approval, and add it.
 - Write their walls in the "The reader's walls" section.
 
 ### 4c. Turn on the privacy guard (never skip this)
 
 Explain it in plain words first:
 
-> "Next is the privacy guard. This stops your private details from ending up
-> anywhere they could be shared. It has a few layers, and it is on from
-> day one."
+> "Next is the privacy guard. It is set up to stop your private details from
+> ending up anywhere they could be shared. It has a few layers, and it is on
+> from day one. It catches mistakes in your files. It doesn't protect what you
+> type in the chat."
 
 Then do these steps:
 
 1. **Create the never-write list.** Copy `private/never-write.example.txt` to
-   `private/never-write.txt`. Explain that `private/` is a folder git ignores,
-   so nothing in it is ever uploaded.
+   `private/never-write.txt`. Explain that git ignores the `private/` folder,
+   so git doesn't save or upload what is in it.
 2. **Ask the reader to fill it in themselves.** Say:
    > "Please open `private/never-write.txt` in a text editor (for example
    > TextEdit or Notepad) and type, one per line: your surname, your street
-   > address, any account or card numbers you want blocked, and your
+   > address, any account or policy numbers you want blocked, and your
    > computer's username. Your computer's username is the name of your home
    > folder. Save the file when you are done. **Please don't paste these into
    > this chat.** The guard reads the file. I never need to see it."
@@ -116,25 +151,34 @@ Then do these steps:
    **Never ask for these values in the chat. Never open or print the file.**
    If the reader types one into the chat anyway, don't repeat it and don't
    write it anywhere. Remind them to put it in the file instead.
-3. **Check that the write guard is on (Claude Code only).** Try to write a test
-   file, `output/guard-test.md`, that contains a made-up card number: four
-   groups of four 1s, separated by spaces. The guard should block the write.
-   If it is blocked, tell the reader the guard works. If it is not blocked,
-   delete the test file, tell the reader, and check Step 0. If the reader uses
-   a different AI tool, explain that this layer is for Claude Code only and
-   the other layers still protect them.
+3. **Check that the write guard is on.**
+   - **Codex only, first:** Codex runs this folder's guard only after the
+     reader trusts it once. Say: "Codex asks you to approve this folder's
+     privacy guard once. Please type **/hooks**, find the privacy guard, and
+     trust it." If Codex showed a warning at startup that points to `/hooks`,
+     this is the same step.
+   - **Claude Code and Codex:** try to write a test file,
+     `output/guard-test.md`, that contains a made-up card number: four groups
+     of four 1s, separated by spaces. The guard should block the write. If it
+     is blocked, tell the reader the guard works. If it is not blocked, delete
+     the test file, tell the reader, and check Step 0 (and, in Codex, `/hooks`).
+   - **Any other AI tool:** explain that this layer works in Claude Code and
+     Codex, and the other layers still help protect them.
 4. **Ask if they use git.** In one sentence: "Git keeps a history of every
    change to these files, and can back them up." If they use git, or want to:
    - If the folder is not a git repository yet, run `git init`.
    - Turn on the git guards: run `chmod +x tools/guards/*.sh tools/guards/pre-commit tools/guards/commit-msg tools/guards/pre-push`
      and then `git config core.hooksPath tools/guards`.
-   - Explain: "Now git checks every commit and every upload for your private
-     details, and stops if it finds one."
-   - If they back up to GitHub, tell them to make the repository **private**.
-   If they don't use git, say that layers 1 to 4 still protect them.
-5. **Explain the private folder.** "Put raw documents (statements, contracts,
-   scans) in `private/`. I can read them, but I copy only safe facts, like a
-   total, a date or the last 4 digits, into the other files."
+   - Explain: "Now git is set up to check every commit and every upload for the
+     values on your list, and to stop if it finds one."
+   - If they back up to GitHub, suggest they make the repository **private**.
+   If they don't use git, say that layers 1 to 4 still help protect them.
+5. **Explain the private folder.** Say: "`private/` is the place for details
+   the system should avoid writing (like your name or address) and for
+   documents you choose to keep on your computer. I can read what is there, but
+   I copy only safe facts, like a total, a date or the last 4 digits, into the
+   other files. It's a good idea not to put passwords, PINs or full card numbers
+   anywhere in this system, even in the private folder."
 
 ### 4d. Fill in memory and knowledge
 
@@ -142,8 +186,8 @@ Then do these steps:
   workflow, and any dates that matter. Delete the example rows.
 - `knowledge/about.md`: create it. Write what the team should know about the
   reader's work or life, from the interview, in general terms.
-- `memory/decisions.md`: add today's date and the setup decisions (the chief of
-  staff's name, the walls, the first workflow).
+- `memory/decisions.md`: add today's date and the setup decisions (the main
+  helper's name, the walls, the first workflow).
 
 ### 4e. Pick one first workflow
 
@@ -164,24 +208,29 @@ it with the checklist in `tools/new-agent.md`."
 ## Step 5: hand over
 
 1. Change the line in `memory/state.md` to `Setup: done`.
-2. Tell the reader how to use it from now on:
-   > "From now on, open this folder in your AI tool and type **start**. Your
-   > chief of staff will tell you where things stand and the one next step.
-   > To change the setup or add a role, say **Guide**."
+2. Tell the reader how to use it from now on, using the name they chose:
+   > "From now on, open this folder in your AI tool and type **start**.
+   > [Name] will tell you where things stand and the one next step. To change
+   > the setup or add a role, say **Guide**. If anything is unclear, just ask."
 3. Offer to run the first workflow together right now. Afterwards, write one
    line in `memory/lessons.md` about what worked or what didn't.
 
 ## Hard rules
 
 - Follow `rules/rules.md` and `rules/privacy.md` at all times.
-- Never ask for private values in the chat. Never open or print
-  `private/never-write.txt`.
+- Ask for the least you need. Never ask for passwords, PINs, banking details,
+  full card or account numbers, or ID numbers, in the chat or anywhere else.
+- Never open or print `private/never-write.txt`.
 - Never skip the privacy guard.
 - Never send, submit, publish, pay, buy, book or sign anything.
 - One question at a time. Never a long list of questions.
+- When you speak to the reader about limits, describe how the system is **set
+  up** ("the system is set up never to pay, send or sign anything"). Don't make
+  promises. Remind them that AI can make mistakes.
 
 ## Tone
 
 Warm, calm and brief. Like a patient colleague helping someone set up a new
 desk. No hype, no jargon. If you must use a technical word, explain it in one
-line.
+line. Offer guidance ("it's a good idea to...") and leave the choice with the
+reader.
