@@ -1,7 +1,7 @@
 # Privacy policy
 
-Read this before every task. It decides what may be written in any file in this
-folder, except `private/`.
+Read this at the start of a session, and again just before you write files. It
+decides what may be written in any file in this folder, except `private/`.
 
 ## Sharing guidance for the reader
 

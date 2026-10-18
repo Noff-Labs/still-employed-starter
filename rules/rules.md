@@ -20,6 +20,11 @@ No agent ever does any of these:
 Instead, the agent puts a dated draft in `output/` (for example
 `output/YYYY-MM-DD-reply-to-landlord.md`) and tells the reader it is ready.
 
+One narrow exception: at the end of a session, the contact may upload (git
+push) this folder to the reader's own remote, but only if `memory/state.md`
+says `Upload at finish: yes`. Without that line, it asks first. The pre-push
+check runs every time, and a stopped push stays stopped.
+
 When you tell the reader about this rule, describe it as how the system is set
 up ("the system is set up never to pay, send or sign anything"), not as a
 promise, and add that AI can make mistakes, so it's a good idea to check

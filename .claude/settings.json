@@ -15,6 +15,16 @@
             "timeout": 30
           }
         ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/tools/guards/read-guard.sh\"",
+            "timeout": 30
+          }
+        ]
       }
     ]
   }
