@@ -2,8 +2,8 @@
 
 A starter AI agent team for your job, your home or a small business. It is a
 small set of plain text files. Your AI tool reads them and plays the roles: a
-Guide that sets the system up with you, and a main helper you talk to every
-day after that.
+Guide that sets the system up with you, and one contact you talk to whenever
+you want something done.
 
 This is the system used by David Noff, author of *Still Employed*. He built it
 up over months of running it at work, at home and in a small publishing company.
@@ -35,15 +35,19 @@ Download the starter system from github.com/Noff-Labs/still-employed-starter int
    the privacy guard.
 2. The Guide asks you what this is for, then asks a few questions, one at a
    time. It asks **what** you want done, not **how** to do it.
-3. It builds the system with you: you choose a name for your main helper, and
+3. It builds the system with you: you choose a name for your one contact, and
    the Guide writes your rules, fills in memory, and turns on the privacy
    guard.
 4. You start with **one** first workflow. You add more roles later, when real
    work shows that one is missing.
-5. After that, open the folder and type **start**. Your main helper tells you
-   where things stand and the one next step.
+5. After that, open the folder and type **start**. Your contact tells you
+   where things stand and the one next step. Then tell it what you want, in
+   your own words.
+6. When you're finished, say **done for today**. Your contact saves what you did and tells you the next step.
 
 If anything is unclear, now or later, just ask. Your AI can explain any step.
+
+Tip for Claude Code users: you can also type **/** and your contact's name, for example **/assistant**.
 
 ## Before you start
 
@@ -63,7 +67,7 @@ If anything is unclear, now or later, just ask. Your AI can explain any step.
 - **Which AI tool?** David uses Claude Code. Every file is plain markdown, so
   other AI tools can use it too. One privacy layer (the write guard) works in
   Claude Code and Codex. The other layers work with any tool. In Codex, you
-  approve the write guard once by typing **/hooks**. The Guide shows you how.
+  approve the guard once by typing **/hooks**. The Guide shows you how.
 
 ## Two rules the system is set up to follow
 
@@ -81,7 +85,7 @@ AI can make mistakes, so it's a good idea to check important work.
 | `AGENTS.md` | Instructions every AI tool reads first |
 | `CLAUDE.md` | Points Claude Code to `AGENTS.md` |
 | `agents/guide.md` | The setup Guide |
-| `agents/chief-of-staff.md` | The main helper you talk to every day (a template the Guide fills in with you) |
+| `agents/chief-of-staff.md` | Your one contact, whenever you want something done (a template the Guide fills in with you) |
 | `rules/rules.md` | House rules every agent follows |
 | `rules/privacy.md` | What must never be written, and what to write instead |
 | `memory/state.md` | Where things stand right now, including reminders |
@@ -91,7 +95,7 @@ AI can make mistakes, so it's a good idea to check important work.
 | `output/` | Drafts waiting for you |
 | `tools/new-agent.md` | Checklist for adding a new role |
 | `tools/guards/` | The privacy guard scripts |
-| `.claude/settings.json`, `.codex/hooks.json` | Turn on the write guard in Claude Code and Codex |
+| `.claude/settings.json`, `.codex/hooks.json` | Turn on the write guard (and the never-write list's read guard) in Claude Code and Codex |
 | `private/` | Details the system should avoid writing (like your name or address), and documents you choose to keep on your computer. Git ignores it |
 
 ## The privacy guard, layer by layer
@@ -101,7 +105,7 @@ AI can make mistakes, so it's a good idea to check important work.
 | 1. Policy (`rules/privacy.md`) | Tells every agent what never to write, and what to write instead | Any AI tool |
 | 2. Private folder (`private/`) | For details the system should avoid writing, and documents you keep on your computer. Git ignores it | Any AI tool |
 | 3. Never-write list (`private/never-write.txt`) | Your surname, address, account numbers and similar. You type it yourself; agents are set up never to open it | Any AI tool |
-| 4. Write guard | Blocks a file write that contains a listed value or a secret-shaped number | Claude Code and Codex |
+| 4. Write guard | Blocks a file write that contains a listed value or a secret-shaped number. A second hook blocks commands that would show the never-write list | Claude Code and Codex |
 | 5. Commit guard | Blocks a git commit that adds a listed value | Git |
 | 6. Pre-push check | Scans every commit before upload, and warns if the GitHub repository is public | Git |
 

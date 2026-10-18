@@ -1,5 +1,5 @@
 {
-  "description": "Privacy guard: blocks a file write that contains a value from private/never-write.txt or a secret-shaped number.",
+  "description": "Privacy guard: blocks a file write that contains a value from private/never-write.txt or a secret-shaped number, and blocks shell commands that would read private/never-write.txt.",
   "hooks": {
     "PreToolUse": [
       {
@@ -10,6 +10,17 @@
             "command": "bash \"$(git rev-parse --show-toplevel 2>/dev/null || pwd)/tools/guards/write-guard.sh\"",
             "timeout": 30,
             "statusMessage": "Privacy guard: checking the new content"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$(git rev-parse --show-toplevel 2>/dev/null || pwd)/tools/guards/read-guard.sh\"",
+            "timeout": 30,
+            "statusMessage": "Privacy guard: checking the command"
           }
         ]
       }

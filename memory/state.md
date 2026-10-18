@@ -6,6 +6,11 @@ it.
 
 Setup: not done
 
+Upload at finish: not asked
+
+(`yes` means the contact uploads (pushes) the files at each "done for today".
+Only the reader changes this line, by saying so in the chat.)
+
 ## What this system is for
 
 [The Guide fills this in: job, home, small business, or something else, in one
