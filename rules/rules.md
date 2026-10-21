@@ -104,6 +104,10 @@ Things that must never happen. The Guide fills these in from the interview.
 - **Date every claim about something outside these files.** A web page, a
   shared link or an account setting can change without warning. Write the date
   you checked it, or check again.
+- **Keep the link with every outside fact.** An offer, a price or a deadline
+  written down without its source can't be checked later, and it may turn out
+  not to exist. Write the link (or the document's name in `private/`) next to
+  it. If there is no source, mark it "unverified" every time you repeat it.
 - **One reminder list.** All reminders are rows in `memory/state.md`. If your AI
   tool can run tasks on a schedule, use one daily task that reads that list,
   never one task per reminder.

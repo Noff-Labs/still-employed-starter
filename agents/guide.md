@@ -235,8 +235,11 @@ Then do these steps:
      (not memory, not lessons, not a summary). If it ends up in a file git
      saves, and the reader forgets to delete it from the list, every later
      upload is stopped.
-   - **Any other AI tool:** explain that this layer works in Claude Code and
-     Codex, and the other layers still help protect them.
+   - **Any other AI tool:** explain that this layer works only in Claude Code
+     and Codex, and that the setup has been tested only there. The commit
+     guard and the pre-push check run in git itself, whatever AI tool they
+     use. The other layers work only if their AI tool reads and follows these
+     files.
 4. **Unlink the starter, then ask about git.** First, if this folder has a
    `.git` folder (it does when the files were downloaded with `git clone`),
    run `git remote get-url origin`. If it points at
@@ -256,7 +259,8 @@ Then do these steps:
      connect **their own** repository, and suggest they make it **private**.
      Never connect this folder to the public starter.
    - Write `Git guards: yes` in `memory/state.md`.
-   If they don't use git, say that layers 1 to 4 still help protect them, and
+   If they don't use git, say that layers 1 to 4 still help protect them in
+   Claude Code and Codex, and
    write `Git guards: no` in `memory/state.md`, so the contact doesn't ask
    about git at every finish.
 5. **Explain the private folder.** Say: "`private/` is the place for details

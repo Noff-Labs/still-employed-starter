@@ -74,8 +74,10 @@ Tip for Claude Code users: you can also type **/** and your contact's name, for 
   may work in other AI tools that can read and write files, but it hasn't been
   tested there. AI tools change often, so if something doesn't work as
   described, ask your AI to check. One privacy layer (the write guard) works in
-  Claude Code and Codex. The other layers work with any tool. In Codex, you
-  approve the guard once by typing **/hooks**. The Guide shows you how.
+  Claude Code and Codex. The commit guard and the pre-push check run in git
+  itself, whatever AI tool you use. The other layers work only if your AI tool
+  reads and follows these files. In Codex, you approve the guard once by typing
+  **/hooks**. The Guide shows you how.
 
 ## Two rules the system is set up to follow
 
@@ -110,15 +112,15 @@ AI can make mistakes, so it's a good idea to check important work.
 
 | Layer | What it does | Works with |
 |---|---|---|
-| 1. Policy (`rules/privacy.md`) | Tells every agent what never to write, and what to write instead | Any AI tool |
-| 2. Private folder (`private/`) | For details the system should avoid writing, and documents you keep on your computer. Git ignores it | Any AI tool |
-| 3. Never-write list (`private/never-write.txt`) | Words you'd rather never see in your files, like your street address. You type it yourself; agents are set up never to open it | Any AI tool |
+| 1. Policy (`rules/privacy.md`) | Tells every agent what never to write, and what to write instead | Tested in Claude Code and Codex |
+| 2. Private folder (`private/`) | For details the system should avoid writing, and documents you keep on your computer. Git ignores it | Tested in Claude Code and Codex |
+| 3. Never-write list (`private/never-write.txt`) | Words you'd rather never see in your files, like your street address. You type it yourself; agents are set up never to open it | Tested in Claude Code and Codex |
 | 4. Write guard | Blocks a file write that contains a listed value or a secret-shaped number. A second hook blocks commands that would show the never-write list | Claude Code and Codex |
-| 5. Commit guard | Blocks a git commit that adds a listed value | Git |
-| 6. Pre-push check | Scans every commit before upload, and refuses to upload to this starter repository. Before an upload to a public repository, it warns you and shows the name and email on your commits | Git |
+| 5. Commit guard | Blocks a git commit that adds a listed value | Git (any AI tool) |
+| 6. Pre-push check | Scans every commit before upload, and refuses to upload to this starter repository. Before an upload to a public repository, it warns you and shows the name and email on your commits | Git (any AI tool) |
 
 If you downloaded the ZIP and don't use git, layers 1 to 4 still help protect
-you.
+you in Claude Code and Codex.
 
 **What the never-write list is for.** Some details aren't secret, but you'd still rather they never end up in your files, where they could be copied or shared by mistake. Your street address is a good example. The never-write list is a short list of words like that. Before any file is saved, the privacy guard is set up to check it for those words and stop if it finds one. The list itself is set up to stay on your computer. What you put in it is up to you.
 
