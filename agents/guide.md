@@ -247,7 +247,10 @@ Then do these steps:
    - Only if they want their files uploaded (backed up online), help them
      connect **their own** repository, and suggest they make it **private**.
      Never connect this folder to the public starter.
-   If they don't use git, say that layers 1 to 4 still help protect them.
+   - Write `Git guards: yes` in `memory/state.md`.
+   If they don't use git, say that layers 1 to 4 still help protect them, and
+   write `Git guards: no` in `memory/state.md`, so the contact doesn't ask
+   about git at every finish.
 5. **Explain the private folder.** Say: "`private/` is the place for details
    the system should avoid writing (like your name or address) and for
    documents you choose to keep on your computer. I can read what is there, but
