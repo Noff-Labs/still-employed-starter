@@ -6,10 +6,16 @@ it.
 
 Setup: not done
 
+Git guards: not asked
+
 Upload at finish: not asked
 
-(`yes` means the contact uploads (pushes) the files at each "done for today".
-Only the reader changes this line, by saying so in the chat.)
+(`Git guards: yes` means the reader wants the git guards on, so the contact
+saves a commit at each "done for today". `no` means the reader doesn't want
+git commits, so the contact doesn't commit and doesn't ask again.
+`Upload at finish: yes` means the contact uploads (pushes) the files at each
+"done for today". Only the reader changes these lines, by saying so in the
+chat.)
 
 ## What this system is for
 
