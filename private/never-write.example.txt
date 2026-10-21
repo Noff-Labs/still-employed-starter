@@ -23,8 +23,8 @@
 # Matching ignores upper and lower case. Use entries of at least 4
 # characters, so the guards don't block ordinary words.
 #
-# To test the list, add a made-up word (for example Zebrafield), ask your AI
-# to try writing it into a file, then delete the test word. Always test with a
-# made-up word, never with something real.
+# To test the list, add a made-up word on its own line (the Guide makes one
+# up for you), ask your AI to try writing it into a file, then delete the test
+# word. Always test with a made-up word, never with something real.
 #
 # Add your entries below this line.

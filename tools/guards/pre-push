@@ -17,6 +17,7 @@ cd "$ROOT" || exit 1
 remote_url="${2:-}"
 zero="0000000000000000000000000000000000000000"
 fail=0
+list_fail=0
 starter="noff-labs/still-employed-starter"
 identities=""
 
@@ -80,6 +81,7 @@ $(git log "$range" --format='%an <%ae>%n%cn <%ce>')"
         echo "  FAIL: entry #$i on your never-write list is in the history of:" >&2
         sed 's/^/      /' <<<"$found" >&2
         fail=1
+        list_fail=1
       fi
     done
     echo "  Never-write list: $i entries checked."
@@ -113,6 +115,7 @@ $(git log "$range" --format='%an <%ae>%n%cn <%ce>')"
     echo "  FAIL: a commit message contains:" >&2
     sed 's/^/      - /' <<<"$hits" >&2
     fail=1
+    grep -q 'never-write list' <<<"$hits" && list_fail=1
   fi
 
   # 6. Author names and emails. A warning only: they are your identity.
@@ -177,6 +180,9 @@ fi
 
 if [ "$fail" -ne 0 ]; then
   echo "PUSH STOPPED. Nothing was uploaded. Remove the values from the history before pushing." >&2
+  if [ "$list_fail" -ne 0 ]; then
+    echo "If this is your test word, delete it from private/never-write.txt and try again." >&2
+  fi
   echo "$HELP_LINE" >&2
   exit 1
 fi

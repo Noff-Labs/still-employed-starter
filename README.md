@@ -69,8 +69,11 @@ Tip for Claude Code users: you can also type **/** and your contact's name, for 
 - **At work.** At work, it's a good idea to use only AI tools your employer
   allows, and to keep confidential information out unless your employer allows
   it.
-- **Which AI tool?** David uses Claude Code. Every file is plain markdown, so
-  other AI tools can use it too. One privacy layer (the write guard) works in
+- **Which AI tool?** David uses it mainly in Claude Code, in the Claude
+  desktop app. In October 2026, the setup was tested there and in Codex. It
+  may work in other AI tools that can read and write files, but it hasn't been
+  tested there. AI tools change often, so if something doesn't work as
+  described, ask your AI to check. One privacy layer (the write guard) works in
   Claude Code and Codex. The other layers work with any tool. In Codex, you
   approve the guard once by typing **/hooks**. The Guide shows you how.
 

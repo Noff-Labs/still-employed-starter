@@ -212,21 +212,29 @@ Then do these steps:
      of four 1s, separated by spaces. The guard should block the write. If it
      is blocked, tell the reader the guard works. If it is not blocked, delete
      the test file, tell the reader, and check Step 0 (and, in Codex, `/hooks`).
-   - **Then offer the never-write test** (Claude Code and Codex). Say, word for
-     word:
-     > "If you'd like to test your never-write list, add a made-up word like
-     > **Zebrafield** on its own line, save the file, and tell me. I'll try to
+   - **Then offer the never-write test** (Claude Code and Codex). First, make
+     up a fresh test word: a few letters, a dash, then four digits you pick at
+     random. Make up a new one every time. Never use a word from these files
+     or from an earlier test. Then say, word for word, with your test word in
+     place of [test word]:
+     > "If you'd like to test your never-write list, add this made-up word on
+     > its own line: **[test word]**. Save the file and tell me. I'll try to
      > write that word into a file, and the guard should stop me. Then you can
      > delete the test word. Always test with a made-up word, never with
      > something real."
 
      If the reader says yes and tells you the word is saved, try to write
-     `output/guard-test.md` containing only the word Zebrafield. It should be
+     `output/guard-test.md` containing only the test word. It should be
      blocked. Check afterward that the file wasn't created; if it was, delete
      it and tell the reader. Then remind them to delete the test word from the
      list. If they skip the test, that's fine: the card-number test already
      showed the guard is on. Never ask them to test with a real entry, and
      never pick a word from their list.
+
+     Apart from that one test write, never write the test word into any file
+     (not memory, not lessons, not a summary). If it ends up in a file git
+     saves, and the reader forgets to delete it from the list, every later
+     upload is stopped.
    - **Any other AI tool:** explain that this layer works in Claude Code and
      Codex, and the other layers still help protect them.
 4. **Unlink the starter, then ask about git.** First, if this folder has a
