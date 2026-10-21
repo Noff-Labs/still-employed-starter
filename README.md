@@ -16,6 +16,10 @@ This repository is the tool. The book is the way of thinking behind it.
 *Still Employed* explains how to think about this system, how to use it well,
 and what you can use it for. The files make much more sense after you read it.
 
+## A word about safety
+
+This system can be powerful, because it lets AI agents do real work for you. That also means you do less of it yourself, so what you let them do really matters. Setting clear limits (your walls) is one of the most important parts of the system. It comes with some safety features built in, like the privacy guard. They're set up to help, but no one can promise they'll always work: AI tools differ from one another, and they change over time. So it's a good idea to ask your AI to explain how the safety features work, to check that they work on your computer, and to add your own limits where you need them. Be careful what you share, and what you ask the AI to do.
+
 ## Quick start
 
 **What you need.** You need an AI tool that can read and write files on your computer, such as Claude Code, Cursor or Codex. A chat window in a web browser can't do this.
@@ -45,7 +49,7 @@ Download the starter system from github.com/Noff-Labs/still-employed-starter int
    your own words.
 6. When you're finished, say **done for today**. Your contact saves what you did and tells you the next step.
 
-If anything is unclear, now or later, just ask. Your AI can explain any step.
+If anything is unclear, now or later, just ask. Your AI can explain any step, including how the safety features work.
 
 Tip for Claude Code users: you can also type **/** and your contact's name, for example **/assistant**.
 
@@ -58,9 +62,10 @@ Tip for Claude Code users: you can also type **/** and your contact's name, for 
 - **Start on the cheapest paid plan** of your AI tool. Upgrade only if you keep
   hitting its limits.
 - **What you share.** It's a good idea to share only what a task needs, and
-  never to share passwords, PINs, bank or card numbers, or ID numbers with an
-  AI tool. What you share is always your choice. The privacy guard catches
-  mistakes in your files. It doesn't protect what you type in the chat.
+  never to share information like passwords, PINs, credit or debit card
+  numbers, bank account numbers or ID numbers with an AI tool. What you share
+  is always your choice. The privacy guard catches mistakes in your files. It
+  doesn't protect what you type in the chat.
 - **At work.** At work, it's a good idea to use only AI tools your employer
   allows, and to keep confidential information out unless your employer allows
   it.
@@ -104,14 +109,17 @@ AI can make mistakes, so it's a good idea to check important work.
 |---|---|---|
 | 1. Policy (`rules/privacy.md`) | Tells every agent what never to write, and what to write instead | Any AI tool |
 | 2. Private folder (`private/`) | For details the system should avoid writing, and documents you keep on your computer. Git ignores it | Any AI tool |
-| 3. Never-write list (`private/never-write.txt`) | Your surname, address, account numbers and similar. You type it yourself; agents are set up never to open it | Any AI tool |
+| 3. Never-write list (`private/never-write.txt`) | Words you'd rather never see in your files, like your street address. You type it yourself; agents are set up never to open it | Any AI tool |
 | 4. Write guard | Blocks a file write that contains a listed value or a secret-shaped number. A second hook blocks commands that would show the never-write list | Claude Code and Codex |
 | 5. Commit guard | Blocks a git commit that adds a listed value | Git |
-| 6. Pre-push check | Scans every commit before upload, and warns if the GitHub repository is public | Git |
+| 6. Pre-push check | Scans every commit before upload, and refuses to upload to this starter repository. Before an upload to a public repository, it warns you and shows the name and email on your commits | Git |
 
 If you downloaded the ZIP and don't use git, layers 1 to 4 still help protect
-you. It's a good idea not to put passwords, PINs or full card numbers anywhere
-in this system, even in the private folder.
+you.
+
+**What the never-write list is for.** Some details aren't secret, but you'd still rather they never end up in your files, where they could be copied or shared by mistake. Your street address is a good example. The never-write list is a short list of words like that. Before any file is saved, the privacy guard is set up to check it for those words and stop if it finds one. The list itself is set up to stay on your computer. What you put in it is up to you.
+
+**What doesn't belong anywhere.** Some information is too sensitive for any of this. It's a good idea never to share information like passwords, PINs, credit or debit card numbers, or bank account numbers with an AI tool, and never to put it anywhere in this system, not even in the never-write list or the private folder.
 
 ## Use at your own risk
 

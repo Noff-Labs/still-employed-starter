@@ -105,4 +105,4 @@ is_never_tracked() {
 }
 
 # Where the protected files are explained, for messages.
-HELP_LINE="See rules/privacy.md: use a first name, the last 4 digits, or \"home\", or keep the value in private/. The matched value is not shown on purpose."
+HELP_LINE="See rules/privacy.md: use a nickname, like 'main checking', or 'home', and first names only. Passwords and card or bank account numbers don't belong anywhere in this system. The matched value is not shown on purpose."

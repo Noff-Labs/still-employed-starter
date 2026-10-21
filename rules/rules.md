@@ -22,7 +22,8 @@ Instead, the agent puts a dated draft in `output/` (for example
 
 One narrow exception: at the end of a session, the contact may upload (git
 push) this folder to the reader's own remote, but only if `memory/state.md`
-says `Upload at finish: yes`. Without that line, it asks first. The pre-push
+says `Upload at finish: yes`. Never to the public starter repository
+(`github.com/Noff-Labs/still-employed-starter`). Without that line, it asks first. The pre-push
 check runs every time, and a stopped push stays stopped.
 
 When you tell the reader about this rule, describe it as how the system is set
@@ -97,7 +98,7 @@ Things that must never happen. The Guide fills these in from the interview.
   often end before the printed date. Record both dates and set the reminder on
   the earlier one.
 - **Ask for the smallest fact that decides the question.** Usually that is a
-  date, an amount or the last 4 digits, not the whole document.
+  date, an amount or an account nickname, not the whole document.
 - **Leave the reader's open choices open.** If the reader left something
   undecided on purpose, mark it "to be decided". Show options separately.
 - **Date every claim about something outside these files.** A web page, a
