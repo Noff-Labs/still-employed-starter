@@ -42,14 +42,25 @@ interview slow and uses up the reader's plan.
 
 ## Step 1: greet and ask what this is for
 
-Say hello in two or three plain sentences. Then say these two lines, word for
-word:
+Say hello in two or three plain sentences. Then say these three parts, word
+for word, in this order:
 
 > "Before we start: this is a free, as-is set of files that you control. What
 > you share and what you ask it to do is up to you."
 
+> "**A word about safety.** This system can be powerful, because it lets AI
+> agents do real work for you. That also means you do less of it yourself, so
+> what you let them do really matters. Setting clear limits (your walls) is one
+> of the most important parts of the system. It comes with some safety features
+> built in, like the privacy guard. They're set up to help, but no one can
+> promise they'll always work: AI tools differ from one another, and they
+> change over time. So it's a good idea to ask your AI to explain how the
+> safety features work, to check that they work on your computer, and to add
+> your own limits where you need them. Be careful what you share, and what you
+> ask the AI to do."
+
 > "If anything is unclear, now or later, just ask. Your AI can explain any
-> step."
+> step, including how the safety features work."
 
 Say what will happen: a short interview, one question at a time, and then you
 build the system together. Then ask one question:
@@ -65,8 +76,9 @@ build the system together. Then ask one question:
   Gently remind them of the sharing guidance:
   > "Thank you. You don't need to type account numbers or passwords into this
   > chat. It's a good idea to share only what a task needs, and never to share
-  > passwords, PINs, bank or card numbers, or ID numbers with an AI tool. What
-  > you share is always your choice."
+  > information like passwords, PINs, credit or debit card numbers, bank
+  > account numbers or ID numbers with an AI tool. What you share is always
+  > your choice."
 
 ## Step 2: the work reminder (only for a job or a business)
 
@@ -159,14 +171,31 @@ Then do these steps:
    because it doesn't show what is in the file, and `-n` never overwrites a
    list that already exists.) Explain that git ignores the `private/` folder,
    so git doesn't save or upload what is in it.
-2. **Ask the reader to fill it in themselves.** Say:
-   > "Please open `private/never-write.txt` in a text editor (for example
-   > TextEdit or Notepad) and type, one per line: your surname, your street
-   > address, any account or policy numbers you want blocked, and your
-   > computer's username. Your computer's username is the name of your home
-   > folder. Save the file when you are done. **Please don't paste these into
-   > this chat.** The guard reads the file. I never need to see it."
+2. **Explain the list, then let the reader fill it in themselves.** Say these
+   two paragraphs, word for word:
+   > "**What the never-write list is for.** Some details aren't secret, but
+   > you'd still rather they never end up in your files, where they could be
+   > copied or shared by mistake. Your street address is a good example. The
+   > never-write list is a short list of words like that. Before any file is
+   > saved, the privacy guard is set up to check it for those words and stop if
+   > it finds one. The list itself is set up to stay on your computer. What you
+   > put in it is up to you."
 
+   > "**What doesn't belong anywhere.** Some information is too sensitive for
+   > any of this. It's a good idea never to share information like passwords,
+   > PINs, credit or debit card numbers, or bank account numbers with an AI
+   > tool, and never to put it anywhere in this system, not even in the
+   > never-write list or the private folder."
+
+   Then say:
+   > "If you'd like to use the list, open `private/never-write.txt` in a text
+   > editor (for example TextEdit or Notepad), type each word or phrase on its
+   > own line, and save the file. **Please don't paste these into this chat.**
+   > The guard reads the file. I never need to see it. Tell me when you're
+   > done, or if you'd rather skip it for now."
+
+   The street address is the only example. Don't give the reader a list of
+   things to add, and never suggest account, card or policy numbers.
    Tell them how to find the file: give the full folder path, and on a Mac
    suggest Finder, then Go, then Go to Folder.
    **Never ask for these values in the chat. Never open or print the file.**
@@ -183,23 +212,47 @@ Then do these steps:
      of four 1s, separated by spaces. The guard should block the write. If it
      is blocked, tell the reader the guard works. If it is not blocked, delete
      the test file, tell the reader, and check Step 0 (and, in Codex, `/hooks`).
+   - **Then offer the never-write test** (Claude Code and Codex). Say, word for
+     word:
+     > "If you'd like to test your never-write list, add a made-up word like
+     > **Zebrafield** on its own line, save the file, and tell me. I'll try to
+     > write that word into a file, and the guard should stop me. Then you can
+     > delete the test word. Always test with a made-up word, never with
+     > something real."
+
+     If the reader says yes and tells you the word is saved, try to write
+     `output/guard-test.md` containing only the word Zebrafield. It should be
+     blocked. Check afterward that the file wasn't created; if it was, delete
+     it and tell the reader. Then remind them to delete the test word from the
+     list. If they skip the test, that's fine: the card-number test already
+     showed the guard is on. Never ask them to test with a real entry, and
+     never pick a word from their list.
    - **Any other AI tool:** explain that this layer works in Claude Code and
      Codex, and the other layers still help protect them.
-4. **Ask if they use git.** In one sentence: "Git keeps a history of every
-   change to these files, and can back them up." If they use git, or want to:
+4. **Unlink the starter, then ask about git.** First, if this folder has a
+   `.git` folder (it does when the files were downloaded with `git clone`),
+   run `git remote get-url origin`. If it points at
+   `github.com/Noff-Labs/still-employed-starter`, run
+   `git remote remove origin` and say: "Your copy is yours now, so it's no
+   longer linked to the public starter." Do this whatever the reader says
+   about git next.
+
+   Then ask, in one sentence: "Git keeps a history of every change to these
+   files, and can back them up." If they use git, or want to:
    - If the folder is not a git repository yet, run `git init`.
    - Turn on the git guards: run `chmod +x tools/guards/*.sh tools/guards/pre-commit tools/guards/commit-msg tools/guards/pre-push`
      and then `git config core.hooksPath tools/guards`.
    - Explain: "Now git is set up to check every commit and every upload for the
      values on your list, and to stop if it finds one."
-   - If they back up to GitHub, suggest they make the repository **private**.
+   - Only if they want their files uploaded (backed up online), help them
+     connect **their own** repository, and suggest they make it **private**.
+     Never connect this folder to the public starter.
    If they don't use git, say that layers 1 to 4 still help protect them.
 5. **Explain the private folder.** Say: "`private/` is the place for details
    the system should avoid writing (like your name or address) and for
    documents you choose to keep on your computer. I can read what is there, but
-   I copy only safe facts, like a total, a date or the last 4 digits, into the
-   other files. It's a good idea not to put passwords, PINs or full card numbers
-   anywhere in this system, even in the private folder."
+   I copy only safe facts, like a total, a date or an account nickname such as
+   'main checking', into the other files."
 
 ### 4d. Fill in memory and knowledge
 

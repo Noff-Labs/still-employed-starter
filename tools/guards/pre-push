@@ -4,8 +4,12 @@
 # A push uploads EVERY past commit, not just today's files. A value removed
 # from the current files still ships if it is in the history. So this scans
 # the full history being pushed: files, commit messages, the never-write list,
-# secret patterns and absolute home-folder paths. It also warns if the GitHub
-# repository is public.
+# secret patterns and absolute home-folder paths.
+#
+# It also refuses to push to the public starter repository this folder was
+# copied from, and before an upload to a public GitHub repository it shows the
+# name and email on the commits. Those two are warnings for the reader: the
+# starter is public, and so is anything pushed to a public repository.
 
 . "$(dirname "$0")/common.sh"
 cd "$ROOT" || exit 1
@@ -13,8 +17,28 @@ cd "$ROOT" || exit 1
 remote_url="${2:-}"
 zero="0000000000000000000000000000000000000000"
 fail=0
+starter="noff-labs/still-employed-starter"
+identities=""
 
 echo "Privacy check before push"
+
+# owner/name of a GitHub remote, or nothing.
+repo=""
+case "$remote_url" in
+  *github.com*) repo="$(sed -E 's#^.*github\.com[:/]##; s#/*$##; s#\.git$##' <<<"$remote_url")" ;;
+esac
+
+# 0. Never upload to the public starter. The reader's copy is their own.
+# (The people who maintain the starter set starter.maintainer in their own
+# copy's local git settings. A reader never needs it.)
+if [ "$(tr '[:upper:]' '[:lower:]' <<<"$repo")" = "$starter" ] &&
+   [ "$(git config --bool starter.maintainer 2>/dev/null)" != "true" ]; then
+  echo "PUSH STOPPED. Nothing was uploaded." >&2
+  echo "This remote is the public starter repository ($repo). Your copy is yours now, so it's no longer linked to the public starter." >&2
+  echo "Remove the link with: git remote remove origin" >&2
+  echo "If you want backups, connect your own repository instead. A private one is a good idea." >&2
+  exit 1
+fi
 
 paths_with() {
   # paths_with <git grep options...>: file paths in the history that match.
@@ -26,6 +50,14 @@ while read -r local_ref local_sha remote_ref remote_sha; do
   [ "$local_sha" = "$zero" ] && continue
   tip="$local_sha"
   echo "  Checking every commit in $local_ref"
+
+  # Names and emails on the commits this push adds, for step 8.
+  range="$tip"
+  if [ "$remote_sha" != "$zero" ] && git cat-file -e "$remote_sha^{commit}" 2>/dev/null; then
+    range="$remote_sha..$tip"
+  fi
+  identities="$identities
+$(git log "$range" --format='%an <%ae>%n%cn <%ce>')"
 
   # 1. Files that must never be tracked, anywhere in the history.
   while IFS= read -r f; do
@@ -96,21 +128,52 @@ while read -r local_ref local_sha remote_ref remote_sha; do
 done
 
 # 7. Is the GitHub repository public? A warning only.
-case "$remote_url" in
-  *github.com*)
-    repo="$(sed -E 's#^.*github\.com[:/]##; s#\.git$##' <<<"$remote_url")"
-    if ! command -v gh >/dev/null 2>&1; then
-      echo "  WARN: could not check whether $repo is public (the gh tool is not installed). Check on GitHub yourself."
+vis=""
+if [ -n "$repo" ]; then
+  if ! command -v gh >/dev/null 2>&1; then
+    echo "  WARN: could not check whether $repo is public (the gh tool is not installed). Check on GitHub yourself."
+  else
+    vis="$(gh repo view "$repo" --json visibility -q .visibility 2>/dev/null)"
+    case "$vis" in
+      PUBLIC) echo "  WARNING: $repo is PUBLIC. Anyone can read everything you push." ;;
+      PRIVATE|INTERNAL) echo "  Repository visibility: $vis." ;;
+      *) echo "  WARN: could not check whether $repo is public. Check on GitHub yourself." ;;
+    esac
+  fi
+fi
+
+# 8. The name and email on the commits, before a public (or unknown) upload.
+# A warning only: the reader decides. A name or email that matches the
+# never-write list is not shown, by the same rule as every other match.
+if [ -n "$repo" ] && [ "$vis" != "PRIVATE" ] && [ "$vis" != "INTERNAL" ]; then
+  shown=""
+  hidden=""
+  while IFS= read -r who; do
+    [ -z "$who" ] && continue
+    i=0
+    match=0
+    for term in "${NEVER_WRITE_ENTRIES[@]+"${NEVER_WRITE_ENTRIES[@]}"}"; do
+      i=$((i + 1))
+      if grep -iqF -- "$term" <<<"$who"; then
+        match=$i
+        break
+      fi
+    done
+    if [ "$match" -eq 0 ]; then
+      shown="$shown
+      $who"
     else
-      vis="$(gh repo view "$repo" --json visibility -q .visibility 2>/dev/null)"
-      case "$vis" in
-        PUBLIC) echo "  WARNING: $repo is PUBLIC. Anyone can read everything you push." ;;
-        PRIVATE|INTERNAL) echo "  Repository visibility: $vis." ;;
-        *) echo "  WARN: could not check whether $repo is public. Check on GitHub yourself." ;;
-      esac
+      hidden="$hidden #$match"
     fi
-    ;;
-esac
+  done <<<"$(sed '/^$/d' <<<"$identities" | sort -u)"
+  if [ -n "$shown$hidden" ]; then
+    echo "  Your commits show this name and email. They'll be public if you upload to a public repo."
+    [ -n "$shown" ] && echo "$shown" | sed '/^$/d'
+    if [ -n "$hidden" ]; then
+      echo "      (A name or email that matches your never-write list (entry$hidden) is not shown here. To see it, run this in a terminal yourself: git log --format='%an <%ae>')"
+    fi
+  fi
+fi
 
 if [ "$fail" -ne 0 ]; then
   echo "PUSH STOPPED. Nothing was uploaded. Remove the values from the history before pushing." >&2

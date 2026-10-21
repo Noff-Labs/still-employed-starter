@@ -67,13 +67,18 @@ are finishing ("that's it for today", "bye"):
    is open. A reminder only helps if someone reads it in time.
 4. Say plainly what is not done or not checked.
 5. **If this folder uses git** (it has a `.git` folder), make one commit of
-   the session's work, with a short message that says what changed. The commit
-   guard runs as usual. If it blocks the commit, don't work around it: say
+   the session's work, with a short message that says what changed. First
+   check that `git config core.hooksPath` shows `tools/guards`. If it doesn't,
+   the git guards are off: don't commit, tell the reader, and offer to turn
+   them on (see `agents/guide.md`, step 4c). The commit guard runs as usual. If it blocks the commit, don't work around it: say
    `[PRIVACY-HOLD]`, name the file, and let the reader decide.
 6. **Upload (push) only with a recorded yes.** A push sends the files outside
    this folder, so the human gate applies. Push only if the folder has a
    remote (`git remote` shows one) **and** the `Upload at finish:` line in
-   `memory/state.md` says `yes`. If there is a remote and the line says
+   `memory/state.md` says `yes`. Never push to the public starter
+   (`github.com/Noff-Labs/still-employed-starter`); if `origin` points there,
+   remove it and tell the reader: "Your copy is yours now, so it's no longer
+   linked to the public starter." If there is a remote and the line says
    anything else, ask once: "Do you want me to upload your files at the end of
    every session from now on?" Write the answer on that line (`yes` or `no`)
    and push only after a yes. If the pre-push check stops the push, say so and

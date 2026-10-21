@@ -5,19 +5,26 @@
 # it. Type the entries yourself in a text editor. Don't paste them into an AI
 # chat.
 #
-# One entry per line. Lines that start with # are comments. Matching ignores
-# upper and lower case. Use entries of at least 4 characters, so the guards
-# don't block ordinary words.
+# What the never-write list is for. Some details aren't secret, but you'd
+# still rather they never end up in your files, where they could be copied or
+# shared by mistake. Your street address is a good example. The never-write
+# list is a short list of words like that. Before any file is saved, the
+# privacy guard is set up to check it for those words and stop if it finds
+# one. The list itself is set up to stay on your computer. What you put in it
+# is up to you.
 #
-# Good entries:
-#   - your surname (and anyone else's in your household or team)
-#   - your street address, as you would write it (number and street name)
-#   - account or policy numbers you want blocked
-#   - your computer's username (the name of your home folder)
-#   - anything else that should not appear in a shared file
+# What doesn't belong anywhere. Some information is too sensitive for any of
+# this. It's a good idea never to share information like passwords, PINs,
+# credit or debit card numbers, or bank account numbers with an AI tool, and
+# never to put it anywhere in this system, not even in the never-write list or
+# the private folder.
 #
-# You don't need to list card numbers: the guards already block card-shaped
-# numbers. It's a good idea not to put passwords, PINs or full card numbers
-# anywhere in this system, even in this folder.
+# How to write entries: one per line. Lines that start with # are comments.
+# Matching ignores upper and lower case. Use entries of at least 4
+# characters, so the guards don't block ordinary words.
+#
+# To test the list, add a made-up word (for example Zebrafield), ask your AI
+# to try writing it into a file, then delete the test word. Always test with a
+# made-up word, never with something real.
 #
 # Add your entries below this line.
