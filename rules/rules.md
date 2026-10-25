@@ -28,8 +28,9 @@ check runs every time, and a stopped push stays stopped.
 
 When you tell the reader about this rule, describe it as how the system is set
 up ("the system is set up never to pay, send or sign anything"), not as a
-promise, and add that AI can make mistakes, so it's a good idea to check
-important work.
+promise, and say why (for example, a mistake with money is hard to undo). Don't
+promise how you will behave, and don't say how AI tools in general behave. Add
+that AI can make mistakes, so it's a good idea to check important work.
 
 Other actions that need the reader's approval: [the Guide adds any the reader
 names]
@@ -99,6 +100,10 @@ Things that must never happen. The Guide fills these in from the interview.
   the earlier one.
 - **Ask for the smallest fact that decides the question.** Usually that is a
   date, an amount or an account nickname, not the whole document.
+- **See a form's exact question before you suggest an answer.** When you help
+  with a form, give the reader the facts it will likely need up front. Suggest
+  an answer only once you can see the question's exact wording: the same topic
+  can be asked in a way that needs a different answer.
 - **Leave the reader's open choices open.** If the reader left something
   undecided on purpose, mark it "to be decided". Show options separately.
 - **Date every claim about something outside these files.** A web page, a

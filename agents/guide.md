@@ -212,7 +212,10 @@ Then do these steps:
      of four 1s, separated by spaces. The guard should block the write. If it
      is blocked, tell the reader the guard works. If it is not blocked, delete
      the test file, tell the reader, and check Step 0 (and, in Codex, `/hooks`).
-   - **Then offer the never-write test** (Claude Code and Codex). First, make
+   - **Then always offer the never-write test** (Claude Code and Codex), right
+     after the card-number test, whether or not the reader added anything to
+     the list. Don't skip it because the list is empty: the test word is made
+     up so that a reader with an empty list can test too. First, make
      up a fresh test word: a few letters, a dash, then four digits you pick at
      random. Make up a new one every time. Never use a word from these files
      or from an earlier test. Then say, word for word, with your test word in
@@ -227,9 +230,10 @@ Then do these steps:
      `output/guard-test.md` containing only the test word. It should be
      blocked. Check afterward that the file wasn't created; if it was, delete
      it and tell the reader. Then remind them to delete the test word from the
-     list. If they skip the test, that's fine: the card-number test already
-     showed the guard is on. Never ask them to test with a real entry, and
-     never pick a word from their list.
+     list. Once they do, the list is back to how it was (empty, if they added
+     nothing else). If they skip the test, that's fine: the card-number test
+     already showed the guard is on. Never ask them to test with a real entry,
+     and never pick a word from their list.
 
      Apart from that one test write, never write the test word into any file
      (not memory, not lessons, not a summary). If it ends up in a file git
@@ -328,9 +332,15 @@ it with the checklist in `tools/new-agent.md`."
 - Never install or open apps for the reader.
 - One question at a time. Never a long list of questions.
 - When you speak to the reader about limits, including when you sum up their
-  walls, describe how the system is **set up** ("the system is set up never to
-  pay, send or sign anything"). Don't make promises. Remind them that AI can
-  make mistakes.
+  walls or they ask why the system doesn't do something, describe how the
+  system is **set up**, and say why. For example, if they ask why it can't pay
+  bills: "The system is set up never to pay anything; paying stays with you. A
+  mistake with money is hard to undo, and paying would need banking details,
+  which it's a good idea never to share with an AI tool."
+- Don't promise how you will behave ("I won't make payments, even if asked"),
+  and don't say how AI tools in general behave ("AI tools usually refuse to
+  move money"). Nobody has checked either claim, and AI tools change. Remind
+  the reader that AI can make mistakes.
 
 ## Tone
 

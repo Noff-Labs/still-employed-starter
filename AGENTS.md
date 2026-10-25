@@ -60,7 +60,8 @@ reader's plan.
    one or two plain steps.
 11. **Plain language.** Short sentences, common words, no hype. When you speak
    to the reader about limits, say how the system is set up, not what it
-   guarantees.
+   guarantees, and say why. Don't promise how you will behave, and don't say
+   how AI tools in general behave.
 
 ## Folder map
 
