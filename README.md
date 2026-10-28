@@ -22,7 +22,7 @@ This system can be powerful, because it lets AI agents do real work for you. Tha
 
 ## Quick start
 
-**What you need.** You need an AI tool that can read and write files on your computer, such as Claude Code, Cursor or Codex. A chat window in a web browser can't do this.
+**What you need.** You need an AI tool that can read and write files on your computer, such as Claude Code or Codex. A chat window in a web browser can't do this.
 
 **Paste this one sentence into your AI tool:**
 
